@@ -12,12 +12,44 @@ angular.module('starter.controllers', [])
   // Form data for the login modal
   $scope.loginData = {};
 
+  // Form data for the add modal
+  $scope.addData = {};
+
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
     scope: $scope
   }).then(function(modal) {
     $scope.modal = modal;
   });
+
+  // Create the addMed modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/addMed.html', {
+    scope: $scope
+  }).then(function(addMedModal) {
+    $scope.addMedModal = addMedModal;
+  });
+
+  // Triggered in the login modal to close it
+  $scope.closeAdd = function() {
+    $scope.addMedModal.hide();
+  };
+
+  // Open the login modal
+  $scope.add = function() {
+    $scope.addMedModal.show();
+  };
+
+  // Perform the login action when the user submits the login form
+  $scope.doAdd = function() {
+    console.log('Doing login', $scope.addData);
+
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function() {
+      $scope.closeAdd();
+    }, 1000);
+  };
+
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
@@ -41,16 +73,17 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
+.controller('MedsCtrl', function($scope) {
+  $scope.meds = [
+    { title: 'Tylenol', id: 1 },
+    { title: 'Claritin', id: 2 },
+    { title: 'Benadryl', id: 3 },
+    { title: 'Advil', id: 4 },
+    { title: 'Morphine', id: 5 },
+    { title: 'Marijuana', id: 6 }
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('MedCtrl', function($scope, $stateParams) {
+
 });

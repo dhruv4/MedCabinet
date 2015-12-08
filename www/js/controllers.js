@@ -41,15 +41,17 @@ angular.module('starter.controllers', [])
 
   // Perform the login action when the user submits the login form
   $scope.doAdd = function() {
-    console.log('Doing login', $scope.addData);
+    console.log('Adding Med', $scope.addData);
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeAdd();
-    }, 1000);
+    var meds = JSON.parse(window.localstorage['Meds'] || '{}');
+
+    meds.push($scope.addData);
+
+    window.localstorage['Meds'] = meds;
+
+    $scope.closeAdd();
+
   };
-
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
@@ -74,7 +76,12 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MedsCtrl', function($scope) {
-  $scope.meds = [
+
+  $scope.meds = window.localstorage['meds'];
+
+  /*
+
+   || [
     { title: 'Tylenol', id: 1 },
     { title: 'Claritin', id: 2 },
     { title: 'Benadryl', id: 3 },
@@ -82,6 +89,8 @@ angular.module('starter.controllers', [])
     { title: 'Morphine', id: 5 },
     { title: 'Marijuana', id: 6 }
   ];
+
+  */
 })
 
 .controller('MedCtrl', function($scope, $stateParams) {

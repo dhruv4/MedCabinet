@@ -7,7 +7,10 @@ angular.module('starter.controllers', [])
   // To listen for when this page is active (for example, to refresh data),
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
-  //});
+  //})
+
+  if(window.localstorage == null)
+    window.localstorage = [];
 
   // Form data for the login modal
   $scope.loginData = {};
@@ -43,11 +46,13 @@ angular.module('starter.controllers', [])
   $scope.doAdd = function() {
     console.log('Adding Med', $scope.addData);
 
-    var meds = JSON.parse(window.localstorage['Meds'] || '{}');
+    var meds = JSON.parse(window.localstorage['Meds'] || '[]');
 
     meds.push($scope.addData);
 
-    window.localstorage['Meds'] = meds;
+    window.localstorage['Meds'] =  JSON.stringify(meds);
+
+    console.log(meds);
 
     $scope.closeAdd();
 
@@ -77,7 +82,11 @@ angular.module('starter.controllers', [])
 
 .controller('MedsCtrl', function($scope) {
 
-  $scope.meds = window.localstorage['meds'];
+  console.log(window.localstorage);
+
+  $scope.meds = JSON.parse(window.localstorage['Meds'] || '[]');
+
+  
 
   /*
 

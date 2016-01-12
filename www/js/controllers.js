@@ -1,3 +1,11 @@
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -48,12 +56,12 @@ angular.module('starter.controllers', [])
 
     var meds = JSON.parse(window.localstorage['Meds'] || "{}");
 
-    if(!meds.size)
-      meds.size = 0;
+    var size = 0, key;
+    for (key in meds) {
+        if (meds.hasOwnProperty(key)) size++;
+    }
 
-    meds.size++;
-
-    meds[meds.size] = $scope.addData;
+    meds[size] = $scope.addData;
 
     window.localstorage['Meds'] =  JSON.stringify(meds);
 
@@ -98,14 +106,6 @@ angular.module('starter.controllers', [])
 .controller('MedCtrl', function($scope, $stateParams) {
 
 
-  
-  
-});
 
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
+
+});

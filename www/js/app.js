@@ -51,6 +51,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     })
   .state('app.shelf', {
     url: '/shelf',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/shelf.html',

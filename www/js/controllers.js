@@ -46,9 +46,14 @@ angular.module('starter.controllers', [])
   $scope.doAdd = function() {
     console.log('Adding Med', $scope.addData);
 
-    var meds = JSON.parse(window.localstorage['Meds'] || '[]');
+    var meds = JSON.parse(window.localstorage['Meds'] || "{}");
 
-    meds.push($scope.addData);
+    if(!meds.size)
+      meds.size = 0;
+
+    meds.size++;
+
+    meds[meds.size] = $scope.addData;
 
     window.localstorage['Meds'] =  JSON.stringify(meds);
 
@@ -84,24 +89,23 @@ angular.module('starter.controllers', [])
 
   console.log(window.localstorage);
 
-  $scope.meds = JSON.parse(window.localstorage['Meds'] || '[]');
+  $scope.meds = JSON.parse(window.localstorage['Meds'] || "{}");
 
-  
+  console.log($scope.meds);
 
-  /*
-
-   || [
-    { title: 'Tylenol', id: 1 },
-    { title: 'Claritin', id: 2 },
-    { title: 'Benadryl', id: 3 },
-    { title: 'Advil', id: 4 },
-    { title: 'Morphine', id: 5 },
-    { title: 'Marijuana', id: 6 }
-  ];
-
-  */
 })
 
 .controller('MedCtrl', function($scope, $stateParams) {
 
+
+  
+  
 });
+
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};

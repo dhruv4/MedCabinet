@@ -105,7 +105,6 @@ angular.module('starter.controllers', [])
 
 .controller('MedCtrl', function($scope, $stateParams) {
 
-
-
+  $scope.medname = "pizza";
 
 });

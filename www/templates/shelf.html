@@ -1,7 +1,7 @@
 <ion-view view-title="Shelf">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="med in meds" href="#/app/shelf/{{med.id}}">
+      <ion-item ng-repeat="med in meds" href="#/app/shelf/{{$index}}">
         {{med.name}}
       </ion-item>
     </ion-list>

@@ -1,11 +1,3 @@
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -43,6 +35,7 @@ angular.module('starter.controllers', [])
   // Triggered in the login modal to close it
   $scope.closeAdd = function() {
     $scope.addMedModal.hide();
+
   };
 
   // Open the login modal
@@ -64,6 +57,10 @@ angular.module('starter.controllers', [])
     meds[size] = $scope.addData;
 
     window.localstorage['Meds'] =  JSON.stringify(meds);
+
+    $scope.$apply(function () {
+      $scope.meds = meds;
+    });
 
     console.log(meds);
 
@@ -95,16 +92,17 @@ angular.module('starter.controllers', [])
 
 .controller('MedsCtrl', function($scope) {
 
-  console.log(window.localstorage);
-
   $scope.meds = JSON.parse(window.localstorage['Meds'] || "{}");
-
-  console.log($scope.meds);
 
 })
 
 .controller('MedCtrl', function($scope, $stateParams) {
 
-  $scope.medname = "pizza";
+  $scope.meds = JSON.parse(window.localstorage['Meds']);
+
+  var banana = $scope.meds[parseInt(window.location.href.match(/^.*\/(.*)$/)[1])];
+
+  $scope.medname = banana['name'];
+  $scope.meddose = banana['dosage'];
 
 });

@@ -58,9 +58,9 @@ angular.module('starter.controllers', [])
 
     window.localstorage['Meds'] =  JSON.stringify(meds);
 
-    $scope.$apply(function () {
+    /*$scope.$apply(function () {
       $scope.meds = meds;
-    });
+    });*/
 
     console.log(meds);
 

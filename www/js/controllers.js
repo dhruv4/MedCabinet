@@ -34,6 +34,8 @@ angular.module('starter.controllers', [])
 
   // Triggered in the login modal to close it
   $scope.closeAdd = function() {
+
+    
     $scope.addMedModal.hide();
 
   };

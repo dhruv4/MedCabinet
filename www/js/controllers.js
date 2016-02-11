@@ -1,6 +1,64 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.service('addModal', function($ionicModal, $rootScope) {
+  
+  
+  var init = function($scope) {
+
+    var promise;
+    $scope = $scope || $rootScope.$new();
+    
+    promise = $ionicModal.fromTemplateUrl('templates/addMed.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+      return modal;
+    });
+
+    $scope.openModal = function() {
+      $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+      $scope.meds = JSON.parse(window.localstorage['Meds']);
+    };
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
+
+    // Perform the add action when the user submits the add form
+    $scope.doAdd = function() {
+      console.log('Adding Med', $scope.addData);
+
+      var meds = JSON.parse(window.localstorage['Meds'] || "{}");
+
+      var size = 0, key;
+      for (key in meds) {
+          if (meds.hasOwnProperty(key)) size++;
+      }
+
+      meds[size] = $scope.addData;
+
+      console.log(meds);
+
+      window.localstorage['Meds'] =  JSON.stringify(meds);
+
+      $scope.closeModal();
+
+    };
+
+    
+    return promise;
+  }
+  
+  return {
+    init: init
+  }
+  
+})
+
+.controller('AppCtrl', function($scope, $ionicModal, addModal, $timeout) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -25,51 +83,6 @@ angular.module('starter.controllers', [])
     $scope.modal = modal;
   });
 
-  // Create the addMed modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/addMed.html', {
-    scope: $scope
-  }).then(function(addMedModal) {
-    $scope.addMedModal = addMedModal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeAdd = function() {
-
-    
-    $scope.addMedModal.hide();
-
-  };
-
-  // Open the login modal
-  $scope.add = function() {
-    $scope.addMedModal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doAdd = function() {
-    console.log('Adding Med', $scope.addData);
-
-    var meds = JSON.parse(window.localstorage['Meds'] || "{}");
-
-    var size = 0, key;
-    for (key in meds) {
-        if (meds.hasOwnProperty(key)) size++;
-    }
-
-    meds[size] = $scope.addData;
-
-    window.localstorage['Meds'] =  JSON.stringify(meds);
-
-    /*$scope.$apply(function () {
-      $scope.meds = meds;
-    });*/
-
-    console.log(meds);
-
-    $scope.closeAdd();
-
-  };
-
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
     $scope.modal.hide();
@@ -90,19 +103,58 @@ angular.module('starter.controllers', [])
       $scope.closeLogin();
     }, 1000);
   };
+
+  $scope.add = function() {
+    addModal
+      .init($scope)
+      .then(function(modal) {
+        modal.show();
+      });
+  };
+
 })
 
-.controller('MedsCtrl', function($scope) {
-
+.controller('MedsCtrl', function($scope, addModal, $ionicModal) {
   $scope.meds = JSON.parse(window.localstorage['Meds'] || "{}");
+
+  // Triggered in the add modal to close it
+  $scope.closeAdd = function() {
+
+    $scope.addMedModal.hide();
+    $scope.meds = JSON.parse(window.localstorage['Meds']);
+    //$scope.$apply();
+
+    console.log($scope.meds);
+  };
+
+  // Perform the add action when the user submits the add form
+  $scope.doAdd = function() {
+    console.log('Adding Med', $scope.addData);
+
+    var meds = JSON.parse(window.localstorage['Meds'] || "{}");
+
+    var size = 0, key;
+    for (key in meds) {
+        if (meds.hasOwnProperty(key)) size++;
+    }
+
+    meds[size] = $scope.addData;
+
+    window.localstorage['Meds'] =  JSON.stringify(meds);
+
+    $scope.closeAdd();
+
+  };
 
 })
 
 .controller('MedCtrl', function($scope, $stateParams) {
-
+  $scope = {};
   $scope.meds = JSON.parse(window.localstorage['Meds']);
 
   var banana = $scope.meds[parseInt(window.location.href.match(/^.*\/(.*)$/)[1])];
+
+  console.log(banana['name']);
 
   $scope.medname = banana['name'];
   $scope.meddose = banana['dosage'];

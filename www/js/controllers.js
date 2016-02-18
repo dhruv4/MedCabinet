@@ -50,6 +50,7 @@ angular.module('starter.controllers', [])
       $scope.closeModal();
 
     };
+
     
     return promise;
   }
@@ -77,6 +78,9 @@ angular.module('starter.controllers', [])
 
   // Form data for the login modal
   $scope.loginData = {};
+
+  // Form data for the add modal
+  $scope.addData = {};
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -117,6 +121,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MedsCtrl', function($scope, addModal, $ionicModal) {
+  //$scope.meds = JSON.parse(window.localstorage['Meds'] || "{}");
 
   $scope.meds = addModal.getMeds();
 

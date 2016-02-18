@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
     window.localstorage = [];
 
   var meds = JSON.parse(window.localstorage['Meds'] || "{}");
-  
+
   function init($scope) {
 
     var promise;
@@ -20,13 +20,17 @@ angular.module('starter.controllers', [])
       $scope.modal = modal;
       return modal;
     });
+    
+    // Form data for the add modal
+    $scope.addData = {};
 
     $scope.openModal = function() {
       $scope.modal.show();
     };
     $scope.closeModal = function() {
       $scope.modal.hide();
-      $scope.meds = JSON.parse(window.localstorage['Meds']);
+      $scope.addData = {};
+      meds = JSON.parse(window.localstorage['Meds']);
     };
     $scope.$on('$destroy', function() {
       $scope.modal.remove();
@@ -34,23 +38,21 @@ angular.module('starter.controllers', [])
 
     // Perform the add action when the user submits the add form
     $scope.doAdd = function() {
-      console.log('Adding Med', $scope.addData);
-
+      
       var size = 0, key;
       for (key in meds) {
-          if (meds.hasOwnProperty(key)) size++;
+          if (meds.hasOwnProperty(key)) 
+            size++;
       }
 
       meds[size] = $scope.addData;
 
-      console.log(meds);
-
       window.localstorage['Meds'] =  JSON.stringify(meds);
+      //meds = JSON.parse(window.localstorage['Meds']);
 
       $scope.closeModal();
 
     };
-
     
     return promise;
   }
@@ -76,40 +78,6 @@ angular.module('starter.controllers', [])
   if(window.localstorage == null)
     window.localstorage = [];
 
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Form data for the add modal
-  $scope.addData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
-
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-
   $scope.add = function() {
     addModal
       .init($scope)
@@ -121,9 +89,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MedsCtrl', function($scope, addModal, $ionicModal) {
-  //$scope.meds = JSON.parse(window.localstorage['Meds'] || "{}");
 
-  $scope.meds = addModal.getMeds();
+  $scope.$watch(function() {return addModal.getMeds();},
+    function(value){
+      $scope.meds = value;
+    }
+
+  );
 
 })
 

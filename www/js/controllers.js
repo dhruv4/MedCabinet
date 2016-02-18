@@ -1,11 +1,16 @@
 angular.module('starter.controllers', [])
 
-.service('addModal', function($ionicModal, $rootScope) {
+.factory('addModal', function($ionicModal, $rootScope) {
   
+  if(window.localstorage == null)
+    window.localstorage = [];
+
+  var meds = JSON.parse(window.localstorage['Meds'] || "{}");
   
-  var init = function($scope) {
+  function init($scope) {
 
     var promise;
+
     $scope = $scope || $rootScope.$new();
     
     promise = $ionicModal.fromTemplateUrl('templates/addMed.html', {
@@ -31,8 +36,6 @@ angular.module('starter.controllers', [])
     $scope.doAdd = function() {
       console.log('Adding Med', $scope.addData);
 
-      var meds = JSON.parse(window.localstorage['Meds'] || "{}");
-
       var size = 0, key;
       for (key in meds) {
           if (meds.hasOwnProperty(key)) size++;
@@ -47,13 +50,15 @@ angular.module('starter.controllers', [])
       $scope.closeModal();
 
     };
-
     
     return promise;
   }
-  
+  function getMeds(){
+    return meds;
+  }
   return {
-    init: init
+    init: init,
+    getMeds: getMeds,
   }
   
 })
@@ -72,9 +77,6 @@ angular.module('starter.controllers', [])
 
   // Form data for the login modal
   $scope.loginData = {};
-
-  // Form data for the add modal
-  $scope.addData = {};
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/login.html', {
@@ -115,55 +117,20 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MedsCtrl', function($scope, addModal, $ionicModal) {
-  $scope.meds = JSON.parse(window.localstorage['Meds'] || "{}");
 
-  // Triggered in the add modal to close it
-  $scope.closeAdd = function() {
-
-    $scope.addMedModal.hide();
-    $scope.meds = JSON.parse(window.localstorage['Meds']);
-    //$scope.$apply();
-
-    console.log($scope.meds);
-  };
-
-  // Perform the add action when the user submits the add form
-  $scope.doAdd = function() {
-    console.log('Adding Med', $scope.addData);
-
-    var meds = JSON.parse(window.localstorage['Meds'] || "{}");
-
-    var size = 0, key;
-    for (key in meds) {
-        if (meds.hasOwnProperty(key)) size++;
-    }
-
-    meds[size] = $scope.addData;
-
-    window.localstorage['Meds'] =  JSON.stringify(meds);
-
-    ///*$scope.$apply(function () {
-      $scope.meds = meds;
-    //});*/
-
-    console.log(window.localstorage['Meds']);
-    console.log($scope.meds);
-
-    $scope.closeAdd();
-
-  };
+  $scope.meds = addModal.getMeds();
 
 })
 
 .controller('MedCtrl', function($scope, $stateParams) {
-  $scope = {};
-  $scope.meds = JSON.parse(window.localstorage['Meds']);
+
+  $scope.meds = JSON.parse(window.localstorage['Meds'] || "{}");
 
   var banana = $scope.meds[parseInt(window.location.href.match(/^.*\/(.*)$/)[1])];
 
-  console.log(banana['name']);
+  $scope.o = {};
 
-  $scope.medname = banana['name'];
-  $scope.meddose = banana['dosage'];
+  $scope.o.medname = banana['name'];
+  $scope.o.meddose = banana['dosage'];
 
 });

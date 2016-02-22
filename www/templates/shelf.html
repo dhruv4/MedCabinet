@@ -1,11 +1,9 @@
 <ion-view view-title="Shelf">
   <ion-content>
-    <ion-refresher pulling-text="Pull to refresh" on-refresh="doRefresh()">
-    </ion-refresher>
     <ion-list>
       <ion-item ng-repeat="med in meds" href="#/app/shelf/{{$index}}">
         <h2>{{med.name}}</h2>
-        <p>{{med.dosage}} dosage text</p>
+        <p>{{med.dosage}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

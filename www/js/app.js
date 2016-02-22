@@ -61,14 +61,26 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   })
   .state('app.notes', {
     url: '/notes',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/notes.html',
+        controller: 'NotesCtrl'
       }
     }
   })
 
-  .state('app.single', {
+  .state('app.note', {
+    url: '/notes/:noteId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/note.html',
+        controller: 'NoteCtrl'
+      }
+    }
+  })
+
+  .state('app.med', {
     url: '/shelf/:medId',
     views: {
       'menuContent': {

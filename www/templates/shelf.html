@@ -5,7 +5,7 @@
     <ion-list>
       <ion-item ng-repeat="med in meds" href="#/app/shelf/{{$index}}">
         <h2>{{med.name}}</h2>
-        <p>{{med.dosage}} dosage text</p>
+        <p>{{med.dosage}} {{med.dosageText}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

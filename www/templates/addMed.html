@@ -12,9 +12,27 @@
           <span class="input-label">Name</span>
           <input type="text" ng-model="addData.name">
         </label>
-        <label class="item item-input">
+        <label class="item item-input item-select">
           <span class="input-label">Dosage</span>
           <input type="number" ng-model="addData.dosage">
+
+          <select ng-model="addData.dosageText">
+            <option selected>pills</option>
+            <option>mg</option>
+            <option>mL</option>
+            <option>units</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Schedule</span>
+          <input type="time" ng-model="addData.schedule">
+
+          <select>
+            <option selected>per day</option>
+            <option>per week</option>
+            <option>mL</option>
+            <option>units</option>
+          </select>
         </label>
         <label class="item">
           <button class="button button-block button-positive" type="submit">Add</button>

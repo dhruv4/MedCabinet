@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['angularMoment',])
 
 .factory('addModal', function($ionicModal, $rootScope) {
   
@@ -67,7 +67,7 @@ angular.module('starter.controllers', [])
   
 })
 
-.factory('noteModal', function($ionicModal, $rootScope) {
+.factory('noteModal', function($ionicModal, $rootScope, moment) {
   
   if(window.localstorage == null)
     window.localstorage = [];
@@ -112,10 +112,11 @@ angular.module('starter.controllers', [])
             size++;
       }
 
+      $scope.addData.date = moment().format("MMMM Do YYYY, h:mm:ss a");
+
       notes[size] = $scope.addData;
 
       window.localstorage['Notes'] =  JSON.stringify(notes);
-      //notes = JSON.parse(window.localstorage['Notes']);
 
       $scope.closeModal();
 
@@ -146,7 +147,7 @@ angular.module('starter.controllers', [])
     window.localstorage = [];
 
   $scope.add = function() {
-    console.log(window.location.href.match(/^.*\/(.*)$/)[1]);
+
     if(window.location.href.match(/^.*\/(.*)$/)[1] == "shelf")
       addModal
         .init($scope)
@@ -198,7 +199,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('NoteCtrl', function($scope, $stateParams) {
+.controller('NoteCtrl', function($scope, $stateParams, moment) {
 
   $scope.notes = JSON.parse(window.localstorage['Notes'] || "{}");
 
@@ -206,7 +207,8 @@ angular.module('starter.controllers', [])
 
   $scope.o = {};
 
-  $scope.o.notename = banana['name'];
+  $scope.o.notetitle = banana['title'];
   $scope.o.notetext = banana['text'];
+  $scope.o.notedate = moment(banana['date'], "MMMM Do YYYY, h:mm:ss a").format("MMMM Do YYYY, h:mm:ss a");
 
 });

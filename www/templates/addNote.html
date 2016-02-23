@@ -9,13 +9,17 @@
     <form ng-submit="doAdd()">
       <div class="list">
         <label class="item item-input">
-          <span class="input-label">Name</span>
-          <input type="text" ng-model="addData.name">
+          <span class="input-label">Title</span>
+          <input type="text" ng-model="addData.title">
         </label>
         <label class="item item-input">
           <span class="input-label">Text</span>
           <input type="text" ng-model="addData.text">
         </label>
+        <!--ion-item>
+          <ion-label floating>Note</ion-label>
+          <ion-textarea [(ngModel)]="addData.text"></ion-textarea>
+        </ion-item-->
         <label class="item">
           <button class="button button-block button-positive" type="submit">Add</button>
         </label>

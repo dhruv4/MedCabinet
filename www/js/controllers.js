@@ -170,8 +170,17 @@ angular.module('starter.controllers', ['angularMoment',])
     function(value){
       $scope.meds = value;
     }
-
   );
+
+  $scope.onMedDelete = function(i) {
+    //$scope.meds.splice(i, 1);
+    delete $scope.meds[i];
+    window.localstorage['Meds'] =  JSON.stringify($scope.meds);
+  };
+
+  $scope.shouldShowDelete = false;
+  $scope.shouldShowReorder = false;
+  $scope.listCanSwipe = true;
 
 })
 

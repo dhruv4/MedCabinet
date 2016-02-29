@@ -195,6 +195,8 @@ angular.module('starter.controllers', ['angularMoment',])
   $scope.o.medname = banana['name'];
   $scope.o.meddose = banana['dosage'];
   $scope.o.meddoseText = banana['dosageText'];
+  $scope.o.medsched = banana['schedule'];
+  $scope.o.medschedText = banana['scheduleText'];
 
 })
 

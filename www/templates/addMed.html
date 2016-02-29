@@ -27,11 +27,11 @@
           <span class="input-label">Schedule</span>
           <input type="time" ng-model="addData.schedule">
 
-          <select>
+          <select ng-model="addData.scheduleText">
             <option selected>per day</option>
             <option>per week</option>
-            <option>mL</option>
-            <option>units</option>
+            <option>per two weeks</option>
+            <option>per month</option>
           </select>
         </label>
         <label class="item">

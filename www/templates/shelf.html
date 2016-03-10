@@ -6,7 +6,7 @@
     <ion-list show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
       <ion-item ng-repeat="med in meds" href="#/app/shelf/{{$index}}">
         <h2>{{med.name}}</h2>
-        <p>{{med.dosage}} {{med.dosageText}}</p>
+        <p>{{med.dosage}} {{med.dosageText}} {{med.takeTime}}</p>
         <ion-option-button class="button-assertive" ng-click="edit(item)">Edit</ion-option-button>
         <ion-delete-button class="ion-minus-circled" ng-click="onMedDelete($index)"></ion-delete-button>
       </ion-item>

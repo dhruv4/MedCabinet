@@ -162,18 +162,30 @@ angular.module('starter.controllers', ['angularMoment',])
         });
   };
 
+  $scope.ifAddPage = function() {
+    if(window.location.href.match(/^.*\/(.*)$/)[1] == "shelf")
+      return true;
+    else if(window.location.href.match(/^.*\/(.*)$/)[1] == "notes")
+      return true;
+    else {
+      return false;
+    }
+  }
+
 })
 
 .controller('MedsCtrl', function($scope, addModal, $ionicModal) {
 
-  $scope.$watch(function() {return addModal.getMeds();},
+  $scope.$watch(
+    function() {
+      return addModal.getMeds();
+    },
     function(value){
       $scope.meds = value;
     }
   );
 
   $scope.onMedDelete = function(i) {
-    //$scope.meds.splice(i, 1);
     delete $scope.meds[i];
     window.localstorage['Meds'] =  JSON.stringify($scope.meds);
   };
@@ -221,6 +233,28 @@ angular.module('starter.controllers', ['angularMoment',])
 
   $scope.o.notetitle = banana['title'];
   $scope.o.notetext = banana['text'];
-  $scope.o.notedate = moment(banana['date'], "MMMM Do YYYY, h:mm:ss a").format("MMMM Do YYYY, h:mm:ss a");
+  $scope.o.notedate = moment(banana['date'], "MMMM Do YYYY, hh:mm:ss a").format("MMMM Do YYYY, hh:mm:ss a");
+
+})
+
+.controller('SettingsCtrl', function($scope, moment) {
+
+  $scope.settingsData = JSON.parse(window.localstorage['Settings'] || "{}");
+
+  if($scope.settingsData.isNotifChecked)
+
+
+  $scope.submitSettings = function(){
+
+    //Add Data Validation
+
+    $scope.settingsData.wakeTime = moment($scope.settingsData.wakeTime, "h:mm a").format("h:mm A");
+    $scope.settingsData.lunchTime = moment($scope.settingsData.lunchTime, "h:mm a").format("h:mm A");
+    $scope.settingsData.dinnerTime = moment($scope.settingsData.dinnerTime, "h:mm a").format("h:mm A");
+    $scope.settingsData.sleepTime = moment($scope.settingsData.sleepTime, "h:mm a").format("h:mm A");
+
+    window.localstorage['Settings'] = JSON.stringify($scope.settingsData);
+
+  }
 
 });

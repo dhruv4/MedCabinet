@@ -1,0 +1,28 @@
+<ion-view view-title="Settings">
+  <ion-content>
+    <form ng-submit="submitSettings()">
+    	<label class="item item-input">
+			<span class="input-label">Wake Time (H:MM AM/PM)</span>
+			<input type="text" ng-model="settingsData.wakeTime">
+        </label>
+        <label class="item item-input">
+			<span class="input-label">Lunch Time (H:MM AM/PM)</span>
+			<input type="text" ng-model="settingsData.lunchTime">
+        </label>
+        <label class="item item-input">
+			<span class="input-label">Dinner Time (H:MM AM/PM)</span>
+			<input type="text" ng-model="settingsData.dinnerTime">
+        </label>
+    	<label class="item item-input">
+			<span class="input-label">Sleep Time (H:MM AM/PM)</span>
+			<input type="text" ng-model="settingsData.sleepTime">
+        </label>
+        <ion-checkbox ng-model="settingsData.isNotifChecked">Enable Local Notifications?</ion-checkbox>
+        <ion-checkbox ng-model="settingsData.isHealthkitChecked">Enable Healthkit Integration?</ion-checkbox>
+        <label class="item">
+          <button class="button button-block button-positive" type="submit">Change Settings</button>
+        </label>
+
+    </form>
+  </ion-content>
+</ion-view>

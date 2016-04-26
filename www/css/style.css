@@ -1,1 +1,26 @@
 /* Empty. Add your own CSS if you like */
+.med {
+	width: 40%;
+	display: inline-block;
+	margin-right: 2%;
+	margin-top: 2%;
+	height: 150px;
+	background: rgba(254,182,69,1);
+	
+}
+.med .item-content {
+	background: rgba(254,182,69,1);
+	padding: 0;
+}
+.med .item-content .cap {
+	background: white;
+	height: 10%;
+	width: 600px;
+}
+.med .item-content .label {
+	background: white;
+	height: 40%;
+	width: 80%;
+	margin-left: 10%;
+	margin-top: 10%;
+}

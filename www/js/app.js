@@ -69,6 +69,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
+  .state('app.settings', {
+    url: '/settings',
+    cache: false,
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/settings.html',
+        controller: 'SettingsCtrl'
+      }
+    }
+  })
 
   .state('app.note', {
     url: '/notes/:noteId',
